@@ -1,0 +1,22 @@
+@font-face {
+  font-family: myFont;
+  src: url(FiraCode-Regular.ttf);
+}
+* {
+  font-family: myFont, IRANSansWeb !important;
+  margin: 0;
+  padding: 0;
+}
+body {
+  color: #333;
+  font-size: 15px;
+}
+ul {
+  list-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+
