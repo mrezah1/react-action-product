@@ -1,11 +1,15 @@
+import React from 'react'
+import useProducts from 'hooks/useProducts'
 import Product from './Product'
 
-const ProductList = ({ glCls, products, loading, error }) => {
+const ProductList = ({ glCls = {}, addProduct }) => {
+  const { data: products, error, loading } = useProducts()
+  React.useEffect(() => {
+    addProduct(products)
+  }, [products])
   return (
     <section className={glCls.mt2}>
-      {console.log(loading)}
       <h2>Products</h2>
-
       {loading && <p>Loading...</p>}
       {error && <p>Falid to get Products</p>}
       {products && (

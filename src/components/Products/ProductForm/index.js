@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react'
+import React, { useState } from 'react'
 import useFirstRender from 'hooks/useFirstRender'
 import Card from 'components/global/Card'
 import Button from 'components/global/Button'
@@ -6,7 +6,7 @@ import Input from 'components/global/Input'
 import inputList from './inputs'
 import Api from 'Api'
 
-const ProductForm = ({ glCls, addProduct }) => {
+const ProductForm = ({ glCls = {}, addProduct }) => {
   const [inputs, setInputs] = useState(inputList)
   let firstRender = useFirstRender()
   const validationHandler = (value, validation) => {
@@ -36,7 +36,7 @@ const ProductForm = ({ glCls, addProduct }) => {
         price
       }
       Api.post('/products.json', newProduct).then((res) => {
-        addProduct((prevProducts) => [
+        addProduct((prevProducts = {}) => [
           ...prevProducts,
           { id: res.name, ...newProduct }
         ])

@@ -1,12 +1,20 @@
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Card from 'components/global/Card'
 import Input from 'components/global/Input'
+import useFetch from 'hooks/useFetch'
 import useStyle from './style'
-import { IoSearchOutline } from 'react-icons/io'
+import useProducts from 'hooks/useProducts'
 
-const ProductSearch = ({ glCls }) => {
+const ProductSearch = ({ glCls = {}, addProducts }) => {
   const cls = useStyle()
   const [inputSearch, setInputSearch] = useState('')
+  const query =
+    inputSearch.trim().length === 0
+      ? ''
+      : `?orderBy="title"&equalTo="${inputSearch}"`
+  const { data } = useProducts(query)
+  // console.log(data)
+  // useEffect(() => {}, [inputSearch])
   return (
     <section className={glCls.mt1}>
       <Card>
@@ -14,7 +22,7 @@ const ProductSearch = ({ glCls }) => {
           value={inputSearch}
           placeHolder="Search..."
           label="Search"
-          onChange={(e) => setInputSearch(e.target.value)}
+          onChange={({ target }) => setInputSearch(target.value)}
           className={cls.flexInput}
         />
       </Card>
