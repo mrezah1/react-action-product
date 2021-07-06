@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import Card from 'components/global/Card'
 import Input from 'components/global/Input'
-import useFetch from 'hooks/useFetch'
+import useGlStyle from '../style'
 import useStyle from './style'
 import useProducts from 'hooks/useProducts'
+import useFirstRender from 'hooks/useFirstRender'
 
-const ProductSearch = ({ glCls = {}, addProducts }) => {
+const ProductSearch = ({ dispatch }) => {
   const cls = useStyle()
+  const glCls = useGlStyle()
   const [inputSearch, setInputSearch] = useState('')
+  const firstRender = useFirstRender()
   const query =
     inputSearch.trim().length === 0
       ? ''
       : `?orderBy="title"&equalTo="${inputSearch}"`
-  const { data } = useProducts(query)
-  // console.log(data)
-  // useEffect(() => {}, [inputSearch])
+  const { data } = useProducts(query, !firstRender)
+  useEffect(() => {
+    dispatch({ type: 'SET', product: data })
+  }, [data])
   return (
     <section className={glCls.mt1}>
       <Card>
@@ -29,4 +33,4 @@ const ProductSearch = ({ glCls = {}, addProducts }) => {
     </section>
   )
 }
-export default ProductSearch
+export default React.memo(ProductSearch)

@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 import useFetch from './useFetch'
 
-const useProducts = (query = '') => {
-  let { data, error, loading } = useFetch('/products.json' + query)
+const useProducts = (query = '', isEnabled = true) => {
+  let { data, error, loading } = useFetch('/products.json' + query, isEnabled)
   return useMemo(() => {
     if (data) {
       const toArr = Object.keys(data)

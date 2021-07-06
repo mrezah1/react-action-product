@@ -1,4 +1,3 @@
-import { first } from 'lodash'
 import { useEffect, useRef } from 'react'
 
 const useFirstRender = () => {

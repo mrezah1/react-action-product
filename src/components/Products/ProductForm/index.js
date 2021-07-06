@@ -4,9 +4,11 @@ import Card from 'components/global/Card'
 import Button from 'components/global/Button'
 import Input from 'components/global/Input'
 import inputList from './inputs'
+import useGlStyle from '../style'
 import Api from 'Api'
 
-const ProductForm = ({ glCls = {}, addProduct }) => {
+const ProductForm = ({ dispatch }) => {
+  const glCls = useGlStyle()
   const [inputs, setInputs] = useState(inputList)
   let firstRender = useFirstRender()
   const validationHandler = (value, validation) => {
@@ -31,24 +33,21 @@ const ProductForm = ({ glCls = {}, addProduct }) => {
     if (isValidForm) {
       // title=inputs[0].value , price=inputs[1].value : 👇
       const [{ value: title }, { value: price }] = inputs
-      const newProduct = {
-        title,
-        price
-      }
-      Api.post('/products.json', newProduct).then((res) => {
-        addProduct((prevProducts = {}) => [
-          ...prevProducts,
-          { id: res.name, ...newProduct }
-        ])
-        // reset input value
-        setInputs((inputs) =>
-          inputs.map((input) => ({
-            ...input,
-            error: true,
-            value: ''
-          }))
-        )
-      })
+
+      Api.post('/products.json', { title, price })
+        .then((res) => res.json())
+        .then((res) => {
+          dispatch({ type: 'ADD', product: { id: res.name, title, price } })
+          // reset input value
+          setInputs((inputs) =>
+            inputs.map((input) => ({
+              ...input,
+              error: true,
+              value: ''
+            }))
+          )
+        })
+        .catch((err) => console.log(err))
     }
   }
 
@@ -73,4 +72,4 @@ const ProductForm = ({ glCls = {}, addProduct }) => {
     </section>
   )
 }
-export default ProductForm
+export default React.memo(ProductForm)

@@ -1,12 +1,9 @@
 import React from 'react'
-import useProducts from 'hooks/useProducts'
+import useGlStyle from '../style'
 import Product from './Product'
 
-const ProductList = ({ glCls = {}, addProduct }) => {
-  const { data: products, error, loading } = useProducts()
-  React.useEffect(() => {
-    addProduct(products)
-  }, [products])
+const ProductList = ({ products, error, loading, dispatch }) => {
+  const glCls = useGlStyle()
   return (
     <section className={glCls.mt2}>
       <h2>Products</h2>
@@ -15,7 +12,7 @@ const ProductList = ({ glCls = {}, addProduct }) => {
       {products && (
         <ul className={glCls.mt1}>
           {products.map((item) => (
-            <Product key={item.id} {...item} />
+            <Product key={item.id} dispatch={dispatch} {...item} />
           ))}
         </ul>
       )}
