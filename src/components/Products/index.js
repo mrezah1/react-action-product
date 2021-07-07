@@ -27,7 +27,7 @@ const Products = () => {
   const cls = useStyle()
 
   return (
-    <div className={cls.wrapper}>
+    <>
       <ProductForm dispatch={dispatch} />
       <ProductSearch dispatch={dispatch} />
       <ProductList
@@ -36,7 +36,7 @@ const Products = () => {
         error={error}
         loading={loading}
       />
-    </div>
+    </>
   )
 }
 export default Products

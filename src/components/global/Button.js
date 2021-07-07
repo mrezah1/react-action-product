@@ -20,8 +20,12 @@ const useStyle = createUseStyles({
     }
   }
 })
-const Button = ({ children, className }) => {
+const Button = ({ children, className, ...rest }) => {
   const cls = useStyle()
-  return <button className={clsx(cls.button, className)}>{children}</button>
+  return (
+    <button className={clsx(cls.button, className)} {...rest}>
+      {children}
+    </button>
+  )
 }
 export default Button
