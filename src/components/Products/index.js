@@ -4,6 +4,7 @@ import ProductSearch from './ProductSearch'
 import ProductList from './ProductList'
 import useStyle from './style'
 import useProducts from 'hooks/useProducts'
+import Button from 'components/global/Button'
 
 const productReducer = (state, action) => {
   const { type, product } = action
@@ -18,7 +19,7 @@ const productReducer = (state, action) => {
       throw new Error('Action undefined')
   }
 }
-const Products = () => {
+const Products = ({ toggleTheme }) => {
   const [products, dispatch] = useReducer(productReducer, [])
   const { data, error, loading } = useProducts()
   React.useEffect(() => {
@@ -36,6 +37,7 @@ const Products = () => {
         error={error}
         loading={loading}
       />
+      <Button onClick={() => toggleTheme()}>Change theme</Button>
     </>
   )
 }

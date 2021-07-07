@@ -1,6 +1,15 @@
 import { createUseStyles } from 'react-jss'
+import clsx from 'utils/clsx'
 
 const useStyle = createUseStyles({
+  wrapper: {
+    minHeight: '100vh',
+    transition: '.22s all'
+  },
+  dark: {
+    backgroundColor: '#30394b',
+    color: '#fff'
+  },
   layoutApp: {
     display: 'flex',
     flexDirection: 'column',
@@ -9,8 +18,15 @@ const useStyle = createUseStyles({
     margin: 'auto'
   }
 })
-const LayoutApp = ({ children }) => {
+const LayoutApp = ({ children, theme, ...rest }) => {
   const cls = useStyle()
-  return <div className={cls.layoutApp}>{children}</div>
+  return (
+    <main
+      className={cls.wrapper + ' ' + (theme === 'dark' ? cls.dark : '')}
+      {...rest}
+    >
+      <div className={cls.layoutApp}>{children}</div>
+    </main>
+  )
 }
 export default LayoutApp
